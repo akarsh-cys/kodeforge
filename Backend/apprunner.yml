@@ -1,0 +1,20 @@
+version: 1.0
+runtime: docker
+
+build:
+  dockerfile: Backend/Dockerfile
+  context: .
+
+run:
+  command: ""
+  network:
+    port: 4001
+    env: PORT
+
+env:
+  - name: AWS_REGION
+    value: ap-south-1
+  - name: BEDROCK_MODEL_ID
+    value: us.anthropic.claude-3-7-sonnet-20250219-v1:0
+  - name: OUTPUT_DIR
+    value: /app/outputs
