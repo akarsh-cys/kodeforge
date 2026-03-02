@@ -34,9 +34,10 @@ RUN mkdir -p outputs/icons && chmod -R 777 outputs
 EXPOSE 4001
 
 # Environment variables for AWS (to be overridden at runtime)
-ENV AWS_REGION=us-east-1
-ENV BEDROCK_MODEL_ID=us.anthropic.claude-3-7-sonnet-20250219-v1:0
+ENV AWS_REGION=ap-south-1
+ENV BEDROCK_MODEL_ID=anthropic.claude-sonnet-4-20250514-v1:0
 ENV OUTPUT_DIR=./outputs
 
 # Command to run the application
+
 CMD ["uvicorn", "api:app", "--host", "0.0.0.0", "--port", "4001"]
