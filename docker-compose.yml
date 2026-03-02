@@ -9,7 +9,7 @@ services:
       - "4001:4001"
     environment:
       - AWS_REGION=ap-south-1
-      - BEDROCK_MODEL_ID=us.anthropic.claude-3-7-sonnet-20250219-v1:0
+      - BEDROCK_MODEL_ID=anthropic.claude-sonnet-4-20250514-v1:0
       - OUTPUT_DIR=./outputs
       # Add your AWS credentials here or use a credentials file/IAM role
       # - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
@@ -29,4 +29,5 @@ services:
     depends_on:
       - backend
     restart: always
+
 
