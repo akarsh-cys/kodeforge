@@ -39,7 +39,7 @@ interface GenerateResponse {
   theme: Theme;
 }
 
-const API_BASE = import.meta.env.VITE_API_BASE || "http://0.0.0.0:4001";
+const API_BASE = import.meta.env.VITE_API_BASE || "http://13.232.27.174:4001";
 
 const DASHBOARD_THEMES = [
   { id: "midnight_executive", name: "Midnight Executive", colors: ["#1E2761", "#CADCFC", "#FFFFFF"] },
