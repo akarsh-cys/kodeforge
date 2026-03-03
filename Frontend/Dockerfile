@@ -17,7 +17,7 @@ COPY Frontend/ .
 ARG VITE_API_BASE=http://localhost:4001
 ENV VITE_API_BASE=$VITE_API_BASE
 
-RUN npm run build
+RUN npx vite build
 
 # Stage 2: Serve the application with Nginx
 FROM nginx:stable-alpine
@@ -29,5 +29,6 @@ COPY --from=build-stage /app/dist /usr/share/nginx/html
 COPY Frontend/nginx.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
+
 
 CMD ["nginx", "-g", "daemon off;"]
