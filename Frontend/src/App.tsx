@@ -39,7 +39,7 @@ interface GenerateResponse {
   theme: Theme;
 }
 
-const API_BASE = import.meta.env.VITE_API_BASE || "http://13.232.27.174:4001";
+const API_BASE = import.meta.env.VITE_API_BASE || import.meta.env.VITE_API_URL || "";
 
 const DASHBOARD_THEMES = [
   { id: "midnight_executive", name: "Midnight Executive", colors: ["#1E2761", "#CADCFC", "#FFFFFF"] },
@@ -372,7 +372,7 @@ const EditorView: React.FC<EditorProps> = ({
                   overflow: 'hidden',
                   boxShadow: '0 20px 40px rgba(0,0,0,0.5)'
                 }}>
-                  <img src={`http://localhost:4001/${current.content.generated_image_path}`} alt="Slide ref" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  <img src={`${API_BASE}/${current.content.generated_image_path}`} alt="Slide ref" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                 </div>
               )}
               <h2 className="preview-title" style={{ maxWidth: current.content.generated_image_path ? '60%' : '100%' }}>{current.content.title}</h2>

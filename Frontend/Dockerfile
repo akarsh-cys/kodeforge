@@ -1,33 +1,30 @@
+# Build from repo ROOT: docker build -f Frontend/Dockerfile -t codeforge-frontend \
+#   --build-arg VITE_API_URL=https://<your-backend>.ap-south-1.awsapprunner.com .
 
-# Stage 1: Build the React/Vite application
-FROM node:20-slim AS build-stage
-
+FROM node:24-alpine AS builder
 WORKDIR /app
 
-# Copy package files
-COPY Frontend/package.json Frontend/package-lock.json ./
+# Receive backend URL at build time - Vite bakes this into the JS bundle
+ARG VITE_API_URL
+ENV VITE_API_URL=$VITE_API_URL
 
-# Install dependencies
-RUN npm install --include=dev
+COPY Frontend/package*.json ./
 
-# Copy the rest of the application source
+# Install ALL deps (including devDeps like vite) so postinstall chmod succeeds
+RUN npm install
+
+# Copy source and build - VITE_API_URL is embedded into dist/ here
 COPY Frontend/ .
-
-# Build the application
-# Use VITE_API_BASE=http://localhost:4001 as default, can be overridden at build time
-ARG VITE_API_BASE=http://13.232.27.174
-ENV VITE_API_BASE=$VITE_API_BASE
 RUN npm run build
 
-# Stage 2: Serve the application with Nginx
-FROM nginx:stable-alpine
+# ── Lean runtime image (Vite SPA — served via nginx) ─────────────────
+FROM nginx:1.27-alpine
 
-# Copy the build output to Nginx's html directory
-COPY --from=build-stage /app/dist /usr/share/nginx/html
+# Copy Vite build output (dist/) into nginx web root
+COPY --from=builder /app/dist /usr/share/nginx/html
 
-# Copy custom nginx config for SPA routing (optional but recommended)
+# Use the repo's own nginx.conf (already has SPA fallback + error pages)
 COPY Frontend/nginx.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
-
 CMD ["nginx", "-g", "daemon off;"]

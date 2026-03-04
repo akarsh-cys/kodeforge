@@ -24,8 +24,8 @@ except ImportError:
 # -----------------------------------------------------------------------------
 # CONFIG
 # -----------------------------------------------------------------------------
-AWS_REGION    = os.getenv("AWS_REGION",        "us-east-1")
-BEDROCK_MODEL = os.getenv("BEDROCK_MODEL_ID",  "us.anthropic.claude-3-7-sonnet-20250219-v1:0")
+AWS_REGION    = os.getenv("AWS_REGION",        "ap-south-1")
+BEDROCK_MODEL = os.getenv("BEDROCK_MODEL_ID",  "apac.anthropic.claude-3-5-sonnet-20241022-v2:0")
 NOVA_CANVAS   = "amazon.nova-canvas-v1:0"
 OUTPUT_DIR    = os.getenv("OUTPUT_DIR",         "./outputs")
 ICONS_DIR     = os.path.join(OUTPUT_DIR, "icons")
